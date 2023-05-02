@@ -40,6 +40,13 @@ final class TableViewController: UITableViewController {
         }
         
         ac.addTextField()
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
+        
+        ac.addAction(action)
+        ac.addAction(cancelAction)
+        
+        self.present(ac, animated: true)
     }
     
     
