@@ -24,6 +24,23 @@ final class TableViewController: UITableViewController {
     // MARK: - IBActions
     
     
+    @IBAction func addTaskAction(_ sender: UIButton) {
+        
+        let ac = UIAlertController(title: "New task", message: "Write your task", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Save", style: .default) { action in
+            let textField = ac.textFields?.first
+            
+            if let newTask = textField?.text {
+                // add task to the beginning of the list
+                self.tasks.insert(newTask, at: 0)
+                self.tableView.reloadData()
+                // or use tableViewCell.insert method
+            }
+        }
+        
+        ac.addTextField()
+    }
     
     
     // MARK: - TableView methods

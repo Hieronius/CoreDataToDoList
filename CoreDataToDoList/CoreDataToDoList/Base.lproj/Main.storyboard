@@ -32,7 +32,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ToDoList" id="4sV-Oy-7Uj">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="S63-tN-rdO"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="S63-tN-rdO">
+                            <connections>
+                                <action selector="addTaskAction:" destination="dFM-vJ-hVf" id="oiw-BO-2ft"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o7R-6c-JOB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
