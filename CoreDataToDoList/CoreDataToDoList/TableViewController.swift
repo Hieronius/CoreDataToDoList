@@ -6,19 +6,34 @@
 //
 
 import UIKit
+import CoreData
 
 final class TableViewController: UITableViewController {
     
     // MARK: - Private Properties
     
-    private var tasks = [String]()
+    private var tasks = [Tasks]()
     
     // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        
+        do {
+            tasks = try context.fetch(fetchRequest)
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // some code here
+        
     }
     
     // MARK: - IBActions
@@ -33,7 +48,7 @@ final class TableViewController: UITableViewController {
             
             if let newTask = textField?.text {
                 // add task to the beginning of the list
-                self.tasks.insert(newTask, at: 0)
+                self.saveTask(withTitle: newTask)
                 self.tableView.reloadData()
                 // or use tableViewCell.insert method
             }
@@ -50,6 +65,25 @@ final class TableViewController: UITableViewController {
     }
     
     
+    // MARK: - Private Methods
+    
+    private func saveTask(withTitle title: String) {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        guard let entity = NSEntityDescription.entity(forEntityName: "Tasks", in: context) else { return }
+        
+        let taskObject = Tasks(entity: entity, insertInto: context)
+        taskObject.title = title
+        
+        do {
+            try context.save()
+            tasks.append(taskObject)
+        } catch let error as NSError {
+            
+        }
+    }
+    
     // MARK: - TableView methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -59,7 +93,8 @@ final class TableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        cell.textLabel?.text = tasks[indexPath.row]
+        let task = tasks[indexPath.row]
+        cell.textLabel?.text = task.title
         
         return cell
     }
