@@ -75,8 +75,20 @@ final class TableViewController: UITableViewController {
         if let tasks = try? context.fetch(fetchRequest) {
             for task in tasks {
                 context.delete(task)
+                
+                if let index = self.tasks.firstIndex(of: task) {
+                    self.tasks.remove(at: index)
+                }
             }
         }
+        
+        do {
+            try context.save()
+        } catch let error as NSError {
+            
+        }
+        
+        self.tableView.reloadData()
     }
     
     
