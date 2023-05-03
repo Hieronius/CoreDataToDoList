@@ -65,6 +65,21 @@ final class TableViewController: UITableViewController {
     }
     
     
+    @IBAction func deleteButtonAction(_ sender: UIButton) {
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        
+        let fetchRequest: NSFetchRequest<Tasks> = Tasks.fetchRequest()
+        
+        if let tasks = try? context.fetch(fetchRequest) {
+            for task in tasks {
+                context.delete(task)
+            }
+        }
+    }
+    
+    
     // MARK: - Private Methods
     
     private func saveTask(withTitle title: String) {

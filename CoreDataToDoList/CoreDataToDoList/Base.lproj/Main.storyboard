@@ -32,6 +32,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ToDoList" id="4sV-Oy-7Uj">
+                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="YbY-Oq-yZO">
+                            <connections>
+                                <action selector="deleteButtonAction:" destination="dFM-vJ-hVf" id="t3g-rb-FYD"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="S63-tN-rdO">
                             <connections>
                                 <action selector="addTaskAction:" destination="dFM-vJ-hVf" id="oiw-BO-2ft"/>
