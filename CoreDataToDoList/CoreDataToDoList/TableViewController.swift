@@ -107,7 +107,7 @@ final class TableViewController: UITableViewController {
             try context.save()
             tasks.append(taskObject)
         } catch let error as NSError {
-            
+            print(error.localizedDescription)
         }
     }
     
